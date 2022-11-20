@@ -14,8 +14,8 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('image.index');
+    {    $images= Image::all();
+        return view('image.index',compact('images'));
     }
 
     /**
@@ -93,8 +93,9 @@ class ImageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $image= Image::findOrFail($id);
+        return view('image.edit',compact('image'));
     }
 
     /**
@@ -106,7 +107,56 @@ class ImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $image = Image::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+
+            $request->validate([
+
+                'image'=> 'required|image|mimes:jpg,jpeg,png'
+
+
+            ]);
+
+            if (file_exists(public_path('/uploads/'.$image->image))) {
+                unlink(public_path('/uploads/'.$image->image)); 
+            }
+
+           
+
+            $file= $request->file('image');
+            $extension= $file->extension();
+            $final= date('YmdHis').'.'.$extension;
+
+            $file->move(public_path('/uploads/'),$final);
+
+            $image->image= $final;
+
+        }
+
+         $request->validate([
+            'first_name'=> 'required',
+            'last_name'=> 'required',
+            'mobile'=> 'required',
+            'address'=> 'required',
+            'post_code'=> 'required',
+           
+
+       ]);
+
+       $image->first_name= $request->first_name;
+       $image->last_name= $request->last_name;
+       $image->mobile= $request->mobile;
+       $image->address= $request->address;
+       $image->post_code= $request->post_code;
+
+       $image->update();
+
+       return redirect()->route('image.index');
+
+       
+
+        
     }
 
     /**
