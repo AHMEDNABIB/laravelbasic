@@ -1,36 +1,45 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\SingleController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
+Route::get('/about1111', function(){
+   return view( 'about');
+})->name('about');
 
-
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/contact', function(){
+   return 'contact';
 });
 
-require __DIR__.'/auth.php';
+Route::get('/country',function(){
+    return view('country');
+})->middleware('country');
+
+
+Route::get('contact', [ExampleController::class, 'index'])->name('contact');
+
+//Route::get('student/store', [ExampleController::class, 'Studentstore'])->name('student.store');
+
+Route::get('/test',SingleController::class);
+
+
+
+// Route::post('/student/store', ExampleController::class , 'Studentstore')->name('student.store');
+
+Route::resource("/student", StudentController::class);
+
+
+
+
+
+
