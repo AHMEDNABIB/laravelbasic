@@ -39,9 +39,9 @@ class ImageController extends Controller
        $request->validate([
             'first_name'=> 'required',
             'last_name'=> 'required',
-            'mobile'=> 'required',
+            'mobile'=> 'required|numeric',
             'address'=> 'required',
-            'post_code'=> 'required',
+            'post_code'=> 'required|digits:4',
             'image'=> 'required|image|mimes:jpg,jpeg,png'
 
        ]);
@@ -71,7 +71,9 @@ class ImageController extends Controller
 
         $image->save();
 
-       return back();
+    //    return back();
+
+    return redirect()->route('image.index');
 
     }
 
@@ -83,7 +85,7 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -167,6 +169,14 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $image= Image::findOrFail($id);
+        
+         if (file_exists(public_path('/uploads/'.$image->image))) {
+                unlink(public_path('/uploads/'.$image->image)); 
+            }
+
+        $image->delete();
+
+        return redirect()->route('image.index');
     }
 }

@@ -3,9 +3,11 @@
 @section('content')
 
     <div class="container">
+       
+        <a href="{{ route('image.create')}}" class="btn btn-primary"> Create</a>
         <div class="row">
             <div class="col-lg-8">
-
+                
                 <table class="table">
                     <thead>
                         <tr>
@@ -35,8 +37,17 @@
                         </td>
 
                         <td>
-                            <a href="{{ route('image.edit',$image->id)}}" class="btn btn-primary"> Edit</a>
-                            <a href="" class="btn btn-danger"> Delete</a>
+                            
+                             <a href="{{ route('image.edit',$image->id)}}" class="btn btn-primary"> Edit</a>
+
+                            
+                              <form action="{{ route('image.destroy', $image->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                      
+                            
                         </td>
                        
 
