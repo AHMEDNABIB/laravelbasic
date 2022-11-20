@@ -11,9 +11,14 @@
         <h5 class="card-title">Name : {{ $students->name }}</h5>
         <p class="card-text">Address : {{ $students->address }}</p>
         <p class="card-text">Mobile : {{ $students->mobile }}</p>
+
+         </br>
+
+        <img src="{{url('/uploads', $image->image)}}" alt="" srcset="" width="300"></br>
+        </br>
   </div>
        
-    </hr>
+    
   
   </div>
 </div>

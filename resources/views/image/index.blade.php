@@ -37,7 +37,7 @@
                         </td>
 
                         <td>
-                            
+                            <a href="{{ route('image.show',$image->id)}}" class="btn btn-primary"> Show</a>
                              <a href="{{ route('image.edit',$image->id)}}" class="btn btn-primary"> Edit</a>
 
                             

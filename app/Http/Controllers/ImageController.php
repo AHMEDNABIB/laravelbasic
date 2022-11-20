@@ -85,7 +85,8 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        
+         $image= Image::findOrFail($id);
+        return view('image.view',compact('image'));
     }
 
     /**

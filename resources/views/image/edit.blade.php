@@ -66,6 +66,8 @@
             
         @enderror
 
+      </br>
+
         <img src="{{url('/uploads', $image->image)}}" alt="" srcset="" width="120"></br>
         </br>
 
