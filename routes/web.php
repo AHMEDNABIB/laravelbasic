@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\SingleController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,6 +38,8 @@ Route::get('/test',SingleController::class);
 // Route::post('/student/store', ExampleController::class , 'Studentstore')->name('student.store');
 
 Route::resource("/student", StudentController::class);
+
+Route::resource('image', ImageController::class);
 
 
 
