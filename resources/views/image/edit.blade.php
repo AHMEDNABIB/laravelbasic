@@ -58,7 +58,7 @@
         @enderror
 
         <label>Image</label></br>
-        <input type="file" name="image" id="img" class="form-control"></br>
+        <input type="file" name="image" id="img" class="form-control" value="{{$image->image}}"></br>
 
          @error('image')
 

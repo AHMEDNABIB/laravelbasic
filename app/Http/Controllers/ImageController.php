@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Image;
 
+use App\Http\Requests\ProjectRequest;
+
 class ImageController extends Controller
 {
     /**
@@ -34,17 +36,19 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-       $request->validate([
-            'first_name'=> 'required',
-            'last_name'=> 'required',
-            'mobile'=> 'required|numeric',
-            'address'=> 'required',
-            'post_code'=> 'required|digits:4',
-            'image'=> 'required|image|mimes:jpg,jpeg,png'
+    //    $request->validate([
+    //         'first_name'=> 'required|max:25',
+    //         'last_name'=> 'required|max:25',
+    //         'mobile'=> 'required|numeric',
+    //         'address'=> 'required',
+    //         'post_code'=> 'required|digits:4',
+    //         'image'=> 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=500,height=500'
 
-       ]);
+    //    ]);
+
+    $validated = $request->validated();
 
           
       if ($request->hasFile('image')) {
@@ -108,18 +112,20 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProjectRequest $request, $id)
     {
         $image = Image::findOrFail($id);
 
         if ($request->hasFile('image')) {
 
-            $request->validate([
+            // $request->validate([
 
-                'image'=> 'required|image|mimes:jpg,jpeg,png'
+            //     'image'=> 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=500,height=500'
 
+            // ]);
 
-            ]);
+            //    $validated = $validator->safe()->only(['image']);
+            //    $validated = $validator->safe()->except(['image.required', 'image.image']);
 
             if (file_exists(public_path('/uploads/'.$image->image))) {
                 unlink(public_path('/uploads/'.$image->image)); 
@@ -137,15 +143,18 @@ class ImageController extends Controller
 
         }
 
-         $request->validate([
-            'first_name'=> 'required',
-            'last_name'=> 'required',
-            'mobile'=> 'required',
-            'address'=> 'required',
-            'post_code'=> 'required',
+    //      $request->validate([
+    //          'first_name'=> 'required|max:25',
+    //         'last_name'=> 'required|max:25',
+    //         'mobile'=> 'required|numeric',
+    //         'address'=> 'required',
+    //         'post_code'=> 'required|digits:4',
            
 
-       ]);
+    //    ]);
+
+            $validated = $request->validated();
+    //    $validated =  $request->safe()->except(['image.required','image.image']);
 
        $image->first_name= $request->first_name;
        $image->last_name= $request->last_name;
